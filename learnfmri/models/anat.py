@@ -1,6 +1,6 @@
 # for now, the t1w model will be a 3D resnet classifier network
-from monai.networks.nets import resnet50
 import torch
+from monai.networks.nets import resnet50
 
 
 class T1WResNet3D(torch.nn.Module):

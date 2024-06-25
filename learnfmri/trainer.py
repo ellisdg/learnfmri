@@ -1,18 +1,16 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Any, Callable, Iterable, Sequence
+from typing import Any, Callable, Iterable, Sequence
 
-
-from torch.optim.optimizer import Optimizer
-from torch.utils.data import DataLoader
-
+import torch
 from monai.config import IgniteInfo
+from monai.engines import Trainer
+from monai.engines.utils import IterationEvents
 from monai.engines.utils import default_metric_cmp_fn, default_prepare_batch
 from monai.transforms import Transform
 from monai.utils import min_version, optional_import
-from monai.engines import Trainer
-from monai.engines.utils import IterationEvents
-import torch
+from torch.optim.optimizer import Optimizer
+from torch.utils.data import DataLoader
 
 Engine, _ = optional_import("ignite.engine", IgniteInfo.OPT_IMPORT_VERSION, min_version, "Engine")
 Metric, _ = optional_import("ignite.metrics", IgniteInfo.OPT_IMPORT_VERSION, min_version, "Metric")
@@ -134,5 +132,3 @@ class AntagonisticContrastiveTrainer(Trainer):
         engine.state.output["representation_loss"] = representation_loss.item()
 
         return engine.state.output
-
-

@@ -1,10 +1,11 @@
-from monai.handlers.ignite_metric import IgniteMetricHandler
+from collections.abc import Callable
+
 from monai.handlers import from_engine
+from monai.handlers.ignite_metric import IgniteMetricHandler
+
 from learnfmri.metrics import (ContrastiveLossMetric, CosineSimilarityMetric, CosineSimilarityDifference,
                                PairIdentificationAccuracyMetric, AntagonisticContrastiveLossMetric,
                                AntagonistCosineSimilarity, ThirdPartyContrastiveLossMetric)
-
-from collections.abc import Callable
 
 
 class ContrastiveLossMetricHandler(IgniteMetricHandler):

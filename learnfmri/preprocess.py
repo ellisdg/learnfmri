@@ -1,8 +1,10 @@
-import ants
-from learnfmri.stats import compute_correlation_coefficient
-from monai.transforms import LoadImage, EnsureChannelFirst, SaveImage
-import os
 import argparse
+import os
+
+import ants
+from monai.transforms import LoadImage, EnsureChannelFirst, SaveImage
+
+from learnfmri.stats import compute_correlation_coefficient
 
 
 def transform_image(image_filename, transform_filename, reference_filename, output_filename, interpolation="linear"):
@@ -16,7 +18,6 @@ def transform_image(image_filename, transform_filename, reference_filename, outp
 
 def compute_fmri_features(fmri_filename, atlas_filename, transform_filename, output_atlas_filename,
                           output_features_filename, z_transform=True, interpolation="linear", overwrite=False):
-
     if overwrite or not os.path.exists(output_atlas_filename):
         output_atlas_filename = transform_image(atlas_filename, transform_filename, fmri_filename,
                                                 output_atlas_filename, interpolation=interpolation)
@@ -52,7 +53,7 @@ def compute_fmri_features_for_fmri_file(fmri_filename, atlas_filename, atlas_spa
 
     output_directory = os.path.dirname(os.path.dirname(fmri_filename)).replace("fmriprep", "learnfmri")
     os.makedirs(os.path.join(output_directory, "anat"), exist_ok=True)
-    output_atlas_filename = os.path.join(output_directory, "anat",  f"{subject}_space-T1w_atlas.nii.gz")
+    output_atlas_filename = os.path.join(output_directory, "anat", f"{subject}_space-T1w_atlas.nii.gz")
     os.makedirs(os.path.join(output_directory, "func"), exist_ok=True)
     output_features_filename = os.path.join(output_directory, "func",
                                             os.path.basename(fmri_filename).replace("bold", "features"))

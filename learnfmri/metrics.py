@@ -40,6 +40,7 @@ class CosineSimilarityDifference(CumulativeIterationMetric):
     If the two inputs are closer, the value will be positive.
     If the antagonistic input is closer, the value will be negative.
     """
+
     def __init__(self):
         super().__init__()
 
@@ -63,6 +64,7 @@ class PairIdentificationAccuracyMetric(CumulativeIterationMetric):
     This isn't a perfect metric as it depends on the batch size: larger batch sizes will have lower accuracy while
     smaller batch sizes will have higher accuracy.
     """
+
     def __init__(self):
         super().__init__()
 
@@ -155,4 +157,3 @@ class ThirdPartyContrastiveLossMetric(CumulativeIterationMetric):
             raise ValueError(f"the data to aggregate must be PyTorch Tensor, got {type(data)}.")
         # take the mean of the batches
         return torch.mean(data)
-

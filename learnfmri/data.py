@@ -1,8 +1,6 @@
 from monai.transforms import Compose, ResizeD, CropForegroundD, NormalizeIntensityD, ConcatItemsD, EnsureChannelFirstD
 from monai.transforms import ResampleToMatchD
 from monai.transforms.io.dictionary import LoadImageD
-from monai.data import CacheDataset, DataLoader
-
 
 default_spatial_size = (128, 128, 128)
 default_transforms = Compose([LoadImageD(keys=["main_image1", "main_image2", "antagonist_image"]),

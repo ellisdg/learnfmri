@@ -1,6 +1,6 @@
 # for now, the fMRI model will be a 3D resnet classifier network
-from monai.networks.nets import resnet50
 import torch
+from monai.networks.nets import resnet50
 
 
 class FMRIResNet3D(torch.nn.Module):
@@ -10,5 +10,3 @@ class FMRIResNet3D(torch.nn.Module):
 
     def forward(self, x):
         return self.resnet(x)
-
-

@@ -1,16 +1,14 @@
 from __future__ import annotations
 
-import warnings
-from typing import TYPE_CHECKING, Any, Callable, Iterable, Sequence
+from typing import Any, Callable, Iterable, Sequence
 
 import torch
-from torch.utils.data import DataLoader
-
 from monai.config import IgniteInfo
+from monai.engines.evaluator import Evaluator
 from monai.engines.utils import IterationEvents, default_metric_cmp_fn, default_prepare_batch
 from monai.transforms import Transform
 from monai.utils import ForwardMode, min_version, optional_import
-from monai.engines.evaluator import Evaluator
+from torch.utils.data import DataLoader
 
 Engine, _ = optional_import("ignite.engine", IgniteInfo.OPT_IMPORT_VERSION, min_version, "Engine")
 Metric, _ = optional_import("ignite.metrics", IgniteInfo.OPT_IMPORT_VERSION, min_version, "Metric")
@@ -20,28 +18,28 @@ EventEnum, _ = optional_import("ignite.engine", IgniteInfo.OPT_IMPORT_VERSION, m
 class AntagonisticContrastiveEvaluator(Evaluator):
 
     def __init__(
-        self,
-        device: torch.device,
-        val_data_loader: Iterable | DataLoader,
-        main_network: torch.nn.Module,
-        antagonistic_network: torch.nn.Module,
-        epoch_length: int | None = None,
-        non_blocking: bool = False,
-        prepare_batch: Callable = default_prepare_batch,
-        iteration_update: Callable[[Engine, Any], Any] | None = None,
-        # inferer: Inferer | None = None,
-        postprocessing: Transform | None = None,
-        key_val_metric: dict[str, Metric] | None = None,
-        additional_metrics: dict[str, Metric] | None = None,
-        metric_cmp_fn: Callable = default_metric_cmp_fn,
-        val_handlers: Sequence | None = None,
-        # amp: bool = False,
-        mode: ForwardMode | str = ForwardMode.EVAL,
-        event_names: list[str | EventEnum | type[EventEnum]] | None = None,
-        event_to_attr: dict | None = None,
-        decollate: bool = True,
-        to_kwargs: dict | None = None,
-        amp_kwargs: dict | None = None,
+            self,
+            device: torch.device,
+            val_data_loader: Iterable | DataLoader,
+            main_network: torch.nn.Module,
+            antagonistic_network: torch.nn.Module,
+            epoch_length: int | None = None,
+            non_blocking: bool = False,
+            prepare_batch: Callable = default_prepare_batch,
+            iteration_update: Callable[[Engine, Any], Any] | None = None,
+            # inferer: Inferer | None = None,
+            postprocessing: Transform | None = None,
+            key_val_metric: dict[str, Metric] | None = None,
+            additional_metrics: dict[str, Metric] | None = None,
+            metric_cmp_fn: Callable = default_metric_cmp_fn,
+            val_handlers: Sequence | None = None,
+            # amp: bool = False,
+            mode: ForwardMode | str = ForwardMode.EVAL,
+            event_names: list[str | EventEnum | type[EventEnum]] | None = None,
+            event_to_attr: dict | None = None,
+            decollate: bool = True,
+            to_kwargs: dict | None = None,
+            amp_kwargs: dict | None = None,
     ) -> None:
         super().__init__(
             device=device,
@@ -67,7 +65,6 @@ class AntagonisticContrastiveEvaluator(Evaluator):
         self.antagonistic_network = antagonistic_network
 
     def _iteration(self, engine: AntagonisticContrastiveEvaluator, batchdata: dict[str, torch.Tensor]) -> dict:
-
         if batchdata is None:
             raise ValueError("Must provide batch data for current iteration.")
 

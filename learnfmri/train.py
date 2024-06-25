@@ -1,12 +1,13 @@
+import torch
+from monai.handlers import StatsHandler, ValidationHandler, from_engine
+from monai.losses import ContrastiveLoss
+
+from learnfmri.evaluator import AntagonisticContrastiveEvaluator
 from learnfmri.handlers import (ContrastiveLossMetricHandler, CosineSimilarityMetricHandler,
                                 CosineSimilarityDifferenceMetricHandler, PairIdentificationAccuracyMetricHandler,
                                 AntagonistCosineSimilarityMetricHandler, AntagonisticContrastiveLossMetricHandler,
                                 ThirdPartyContrastiveLossMetricHandler)
 from learnfmri.trainer import AntagonisticContrastiveTrainer
-from learnfmri.evaluator import AntagonisticContrastiveEvaluator
-from monai.losses import ContrastiveLoss
-from monai.handlers import StatsHandler, ValidationHandler, from_engine
-import torch
 
 
 def setup_evaluator(device, main_network, antagonistic_network, val_loader):
@@ -24,7 +25,7 @@ def setup_evaluator(device, main_network, antagonistic_network, val_loader):
             "cosine_similarity_difference": CosineSimilarityDifferenceMetricHandler(),
             "pair_identification_accuracy": PairIdentificationAccuracyMetricHandler(),
         },
-            )
+    )
     return evaluator
 
 
@@ -50,7 +51,6 @@ def setup_trainer(device, main_network, antagonistic_network, train_loader, trai
 
 def train_fold(main_network, antagonistic_network, train_loaders, val_loaders, fold_index, device, learning_rate=1e-3,
                interval=1, max_epochs=100):
-
     evaluator = setup_evaluator(device=device,
                                 main_network=main_network,
                                 antagonistic_network=antagonistic_network,
