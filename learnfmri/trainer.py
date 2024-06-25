@@ -130,7 +130,7 @@ class AntagonisticContrastiveTrainer(Trainer):
 
         engine.fire_event(IterationEvents.MODEL_COMPLETED)
 
-        engine.state.output["antagonistic_loss"] = antagonistic_loss.item()
+        engine.state.output["antagonist_loss"] = antagonistic_loss.item()
         engine.state.output["representation_loss"] = representation_loss.item()
 
         return engine.state.output
